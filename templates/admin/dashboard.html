@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Admin - E-Commerce{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="row g-3">
+  <div class="col-md-3"><div class="card"><div class="card-body"><div class="text-muted">Products</div><div class="fs-4">{{ product_count }}</div></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><div class="text-muted">Categories</div><div class="fs-4">{{ category_count }}</div></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><div class="text-muted">Orders</div><div class="fs-4">{{ order_count }}</div></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><div class="text-muted">Customers</div><div class="fs-4">{{ customer_count }}</div></div></div></div>
+</div>
+{% endblock %}
+

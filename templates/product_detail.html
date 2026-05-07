@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} - E-Commerce{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <h2>{{ product.name }}</h2>
+    <p class="text-muted">Category: {{ product.category.name }}</p>
+    <p>{{ product.description }}</p>
+  </div>
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-body">
+        <h4>{{ (product.price_cents/100)|round(2) }} $</h4>
+        <p class="text-muted">Stock: {{ product.stock }}</p>
+        <form method="post" action="{{ url_for('cart_add_route', product_id=product.id) }}">
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input class="form-control" type="number" name="qty" min="1" max="{{ product.stock }}" value="1" required>
+          </div>
+          <button class="btn btn-primary w-100" type="submit" {% if product.stock<=0 %}disabled{% endif %}>Add to cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

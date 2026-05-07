@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Admin Orders - E-Commerce{% endblock %}
+{% block content %}
+<h2>Orders</h2>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Placed At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+          <tr>
+            <td>{{ o.id }}</td>
+            <td>{{ o.user.email }}</td>
+            <td>{{ o.status }}</td>
+            <td>{{ (o.total_cents/100)|round(2) }} $</td>
+            <td>{{ o.placed_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+

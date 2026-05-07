@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Home - E-Commerce{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Browse</h5>
+        <form method="get" class="mt-3">
+          <label class="form-label">Category</label>
+          <select name="category" class="form-select" onchange="this.form.submit()">
+            <option value="" {% if not selected_category_id %}selected{% endif %}>All</option>
+            {% for c in categories %}
+              <option value="{{ c.id }}" {% if selected_category_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+          </select>
+          <div class="mt-3">
+            <label class="form-label">Search</label>
+            <input name="q" class="form-control" value="{{ q or '' }}" placeholder="Product name">
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-primary w-100" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h4 class="mb-0">Products</h4>
+      <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('cart') }}">View cart</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+      {% for p in products %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title">{{ p.name }}</h5>
+              <span class="badge text-bg-{{ 'success' if p.stock>0 else 'secondary' }}">{{ 'In stock' if p.stock>0 else 'Out' }}</span>
+            </div>
+            <p class="text-muted mb-2">{{ p.category.name }}</p>
+            <p class="mb-3">{{ (p.price_cents/100)|round(2) }} $</p>
+            <p class="text-truncate" style="max-width: 100%">{{ p.description }}</p>
+          </div>
+          <div class="card-footer bg-white d-flex gap-2">
+            <a class="btn btn-primary flex-fill" href="{{ url_for('product_detail', product_id=p.id) }}">Details</a>
+            <form method="post" action="{{ url_for('cart_add_route', product_id=p.id) }}">
+              <input type="hidden" name="qty" value="1">
+              <button class="btn btn-outline-dark" type="submit" {% if p.stock<=0 %}disabled{% endif %}>Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+

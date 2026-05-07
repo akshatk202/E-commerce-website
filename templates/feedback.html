@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Feedback - E-Commerce{% endblock %}
+{% block content %}
+<h2>Give Feedback</h2>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        <label class="form-label">{{ form.rating.label }}</label>
+        {{ form.rating(class_='form-control', min=1, max=5) }}
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{{ form.message.label }}</label>
+        {{ form.message(class_='form-control', rows=5) }}
+      </div>
+
+      <button class="btn btn-primary w-100" type="submit">Submit feedback</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+

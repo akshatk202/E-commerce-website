@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Admin Categories - E-Commerce{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-5">
+    <h3>Create Category</h3>
+    <form method="post" class="card p-3">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        <label class="form-label">{{ form.name.label }}</label>
+        {{ form.name(class_='form-control') }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.description.label }}</label>
+        {{ form.description(class_='form-control') }}
+      </div>
+      <button class="btn btn-primary w-100" type="submit">Add</button>
+    </form>
+  </div>
+
+  <div class="col-md-7">
+    <h3>Categories</h3>
+    <div class="card">
+      <div class="card-body">
+        <div class="list-group">
+          {% for c in categories %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">{{ c.name }}</div>
+                {% if c.description %}<div class="text-muted">{{ c.description }}</div>{% endif %}
+              </div>
+              <form method="post" action="{{ url_for('admin_category_delete', category_id=c.id) }}">
+                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

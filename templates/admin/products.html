@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Admin Products - E-Commerce{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-5">
+    <h3>Create Product</h3>
+    <form method="post" class="card p-3">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        <label class="form-label">{{ form.name.label }}</label>
+        {{ form.name(class_='form-control') }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.description.label }}</label>
+        {{ form.description(class_='form-control', rows=3) }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.price.label }}</label>
+        {{ form.price(class_='form-control') }}
+        <div class="text-muted small">Tip: 1999 cents = 19.99 $</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.stock.label }}</label>
+        {{ form.stock(class_='form-control') }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.category_id.label }}</label>
+        {{ form.category_id(class_='form-select') }}
+      </div>
+      <button class="btn btn-primary w-100" type="submit">Add</button>
+    </form>
+  </div>
+
+  <div class="col-md-7">
+    <h3>Products</h3>
+    <div class="card">
+      <div class="card-body">
+        <div class="list-group">
+          {% for p in products %}
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">{{ p.name }}</div>
+                <div class="text-muted">{{ p.category.name }} • {{ (p.price_cents/100)|round(2) }} $ • Stock {{ p.stock }}</div>
+              </div>
+              <form method="post" action="{{ url_for('admin_product_delete', product_id=p.id) }}">
+                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
